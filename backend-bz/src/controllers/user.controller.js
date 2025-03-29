@@ -68,10 +68,12 @@ const loginUser = async (req, res) => {
 // Get User Profile
 const getUserProfile = async (req, res) => {
     try {
-        const useremail = req.params.email;  
-
-        const user = await userData.findOne({ email: useremail }).populate("products");
+        const useremail = req.params.email;
+        // const user = await userData.findOne({ email: useremail });
         
+        // Find the user and populate the products field
+        const user = await userData.findOne({ email: useremail }).populate("products");
+        console.log("User before populate:", user);
         if (!user) return res.status(404).json({ msg: "User not found" });
 
         console.log("User profile:", user);
@@ -80,7 +82,7 @@ const getUserProfile = async (req, res) => {
         console.error("Error fetching user profile:", err);
         return res.status(500).json({ msg: "Error fetching user profile", error: err.message });
     }
-}
+};
 
 export {
     registerUser,

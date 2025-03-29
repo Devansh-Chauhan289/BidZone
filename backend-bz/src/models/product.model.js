@@ -50,7 +50,7 @@ const mediaSchema = new Schema({
 })
 
 
-const eventSchema = new Schema({
+const ProductSchema = new Schema({
     title: { type: String, required: true },
     desc: { type: String },
     dateTime: {
@@ -65,7 +65,37 @@ const eventSchema = new Schema({
     media: [String],
     responsed: [
         {
-            user: { type: Schema.Types.ObjectId, ref: "User" }
+            user: { type: Schema.Types.ObjectId, ref: "User" },
+            status: { type: String, enum: ["intrested", "not intrested"], default: "maybe" },
         },
     ],
 })
+
+ProductSchema.pre("save", async function (next) {
+    if (!this.isModified("responsed")) return next()
+
+    try {
+        const changedToIntrested = this.responsed.filter(status => status.isModified("status") && status.status === "intrested")
+
+        if (changedToIntrested.length > 0) {
+            for (let status of changedToIntrested) {
+                const user = await userData.findById(status.user)
+
+                if (user) {
+                    await sendResponsedMail(user.email, this)
+                }
+            }
+        }
+
+        next()
+    } catch (err) {
+        console.error("Error in pre-save hook:", err)
+        next(err)
+    }
+})
+
+const productData = model("Products", ProductSchema)
+
+export {
+    productData
+}

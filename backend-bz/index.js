@@ -26,6 +26,7 @@ app.use(passport.session())
 
 
 app.use("/",userRouter)
+app.use("/product",productRouter)
 
 
 app.listen(PORT, async () => {
