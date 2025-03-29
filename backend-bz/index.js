@@ -37,6 +37,6 @@ app.listen(PORT, async () => {
         console.log(`Server is running on port http://localhost:${PORT}`);
     } catch (error) {
         console.error("Error occurred while connecting to the database:", error.message);
-        process.exit(1); // Exit the process if the database connection fails
+        process.exit(1); 
     }
 });
