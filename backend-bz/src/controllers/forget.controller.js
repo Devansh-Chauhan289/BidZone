@@ -1,5 +1,5 @@
 import crypto from "crypto"
-import { userData } from "../models/userModel.js"
+import { userData } from "../models/user.model.js"
 import nodemailer from "nodemailer"
 import argon2 from "argon2"
 import dotenv from "dotenv"

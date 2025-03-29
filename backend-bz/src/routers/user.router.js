@@ -1,7 +1,6 @@
 import { forgotPassword, resetPassword } from "../controllers/forget.controller.js"
 import {registerUser, loginUser, getUserProfile} from "../controllers/user.controller.js"
 import express from "express"
-import { forgotPassword,resetPassword } from "../controllers/forget.controller.js"
 import { authMiddleware } from "../middlewares/authMiddleware.js"
 
 const userRouter = express.Router()

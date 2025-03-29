@@ -70,7 +70,7 @@ const getUserProfile = async (req, res) => {
     try {
         const useremail = req.params.email;  
 
-        const user = await userData.findOne({ email: useremail }).populate("createdEvents");
+        const user = await userData.findOne({ email: useremail }).populate("products");
         
         if (!user) return res.status(404).json({ msg: "User not found" });
 
